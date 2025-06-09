@@ -1,4 +1,23 @@
 <resources>
 
-    <style name="Theme.FireTV" parent="Theme.AppCompat.DayNight.NoActionBar" />
+    <style name="Theme.FireTV" parent="Theme.Leanback" />
+
+    <style name="NavBarImageButton">
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:tint">@android:color/white</item>
+    </style>
+
+    <style name="NavBarButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

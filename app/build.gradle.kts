@@ -56,9 +56,18 @@ dependencies {
     // Image Loading Library
     implementation(libs.coil.compose)
 
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation(libs.androidx.recyclerview)
+    implementation("io.coil-kt:coil:2.6.0")
+// ↓↓↓ ADD THIS LINE IF IT'S MISSING ↓↓↓
+    implementation(libs.androidx.appcompat)
+    implementation("androidx.leanback:leanback:1.0.0")
+
     // Standard Testing Libraries
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+
 }

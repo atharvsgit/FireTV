@@ -1,53 +1,63 @@
 package com.example.firetv
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.tv.foundation.lazy.list.TvLazyColumn
-import androidx.tv.foundation.lazy.list.items
-import androidx.tv.material3.ExperimentalTvMaterial3Api
-import androidx.tv.material3.Surface
-import com.example.firetv.ui.theme.FireTVTheme // Make sure this matches your theme's package name
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : ComponentActivity() {
+class MainActivity : androidx.fragment.app.FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // setContent is where you define your app's UI with Jetpack Compose
-        setContent {
-            // We wrap our entire UI in the theme we defined earlier
-            FireTVTheme {
-                RecommendationScreen()
-            }
-        }
+        setContentView(R.layout.activity_main)
+
+        // Setup the "Recommended For You" RecyclerView
+        setupRecommendedRow()
+
+        // Setup the click listeners for our new navigation buttons
+        setupClickListeners()
     }
-}
 
-@OptIn(ExperimentalTvMaterial3Api::class)
-@Composable
-fun RecommendationScreen() {
-    // 1. We call our fake data source to get the list of rows to display.
-    val recommendationRows = getFakeRecommendations()
+    private fun setupRecommendedRow() {
+        val recommendationRows = getFakeRecommendations()
+        val recommendedRecyclerView = findViewById<RecyclerView>(R.id.recycler_view_recommended)
 
-    // 2. A Surface is a container that provides a background color from our theme.
-    Surface(modifier = Modifier.fillMaxSize()) {
+        recommendedRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        // The data now has only two rows, so index 1 is the "Recommended" data
+        recommendedRecyclerView.adapter = ContentAdapter(recommendationRows[1].items)
+    }
 
-        // 3. TvLazyColumn is the TV-optimized vertical list. It will stack our
-        //    RecommendationRow components on top of each other.
-        TvLazyColumn(
-            contentPadding = PaddingValues(vertical = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
-        ) {
-            // 4. This is the final loop. For each "RecommendationRow" in our data...
-            items(recommendationRows) { row ->
-                // ...we call the RecommendationRow composable we built!
-                RecommendationRow(row = row)
-            }
-        }
+    private fun setupClickListeners() {
+        // Find each button by its ID from the XML layout
+        val profileButton = findViewById<ImageButton>(R.id.btn_profile)
+        val searchButton = findViewById<ImageButton>(R.id.btn_search)
+        val homeButton = findViewById<ImageButton>(R.id.btn_home)
+        val bookmarksButton = findViewById<ImageButton>(R.id.btn_bookmarks)
+        val exitButton = findViewById<ImageButton>(R.id.btn_exit)
+
+        val netflixButton = findViewById<Button>(R.id.btn_netflix)
+        val primeButton = findViewById<Button>(R.id.btn_prime)
+        val huluButton = findViewById<Button>(R.id.btn_hulu)
+        val allAppsButton = findViewById<ImageButton>(R.id.btn_all_apps)
+
+
+        // Set an OnClickListener for each button.
+        profileButton.setOnClickListener { showToast("Profile clicked") }
+        searchButton.setOnClickListener { showToast("Search clicked") }
+        homeButton.setOnClickListener { showToast("Home clicked") }
+        bookmarksButton.setOnClickListener { showToast("Bookmarks clicked") }
+        exitButton.setOnClickListener { showToast("Exit clicked") }
+
+        netflixButton.setOnClickListener { showToast("Netflix clicked") }
+        primeButton.setOnClickListener { showToast("Prime Video clicked") }
+        huluButton.setOnClickListener { showToast("Hulu clicked") }
+        allAppsButton.setOnClickListener { showToast("All Apps clicked") }
+    }
+
+    // A helper function to make showing Toasts easier
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
